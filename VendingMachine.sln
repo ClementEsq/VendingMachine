@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingMachine", "VendingMachine\VendingMachine.csproj", "{B0AB7B3F-37F7-42B6-A12C-51BD54367C39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingMachine.Services", "VendingMachine.Services\VendingMachine.Services.csproj", "{E2D68BD8-7157-4222-A172-CC034A308263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingMachine.Tests", "VendingMachine.Tests\VendingMachine.Tests.csproj", "{0B77A34F-BE57-4D36-98D7-14AB5E73EE03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +17,13 @@ Global
 		{B0AB7B3F-37F7-42B6-A12C-51BD54367C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0AB7B3F-37F7-42B6-A12C-51BD54367C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0AB7B3F-37F7-42B6-A12C-51BD54367C39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2D68BD8-7157-4222-A172-CC034A308263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2D68BD8-7157-4222-A172-CC034A308263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2D68BD8-7157-4222-A172-CC034A308263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2D68BD8-7157-4222-A172-CC034A308263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B77A34F-BE57-4D36-98D7-14AB5E73EE03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B77A34F-BE57-4D36-98D7-14AB5E73EE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B77A34F-BE57-4D36-98D7-14AB5E73EE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B77A34F-BE57-4D36-98D7-14AB5E73EE03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
