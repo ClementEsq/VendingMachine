@@ -26,9 +26,15 @@ namespace VendingMachine.Models
         public double Price { get; set; }
     }
 
+    public class UserCard
+    {
+        public int Id { get; set; }
+        public int AccountId { get; set; }
+    }
+
     public class UserCardEntry
     {
-        public Card Card { get; set; }
+        public UserCard Card { get; set; }
         public string SuppliedPIN { get; set; }
     }
 }
@@ -156,14 +162,29 @@ namespace VendingMachine.Services
 
 namespace User.Models
 {
-    public class Card
+    public enum CardType
+    {
+        cash
+    }
+
+    public enum AccountType
+    {
+        joint
+    }
+
+    public abstract class Card
     {
         public int Id { get; set; }
         public int AccountId { get; set; }
+        public abstract CardType CardType { get; }
     }
 
     public class CashCard : Card
     {
+        public override CardType CardType
+        {
+            get => CardType.cash;
+        }
     }
 
     public class CardUserIdentity
@@ -172,15 +193,20 @@ namespace User.Models
         public Card Card { get; set; }
     }
 
-    public class Account
+    public abstract class Account
     {
         public int Id { get; set; }
         public double Balance { get; set; }
         public IReadOnlyList<Card> Cards { get; set; }
+        public abstract AccountType AccountType { get; }
     }
 
     public class JointAccount : Account
     {
+        public override AccountType AccountType
+        {
+            get => AccountType.joint;
+        }
     }
 }
 
@@ -209,53 +235,19 @@ namespace Bank.Consortium
         {
             public class BankDataBase : IBankDataBase
             {
-                private IReadOnlyList<Account> _accounts
-                {
-                    get
-                    {
-                        var accountId = 1;
+                private static IReadOnlyList<Account> _accounts;
+                private static IReadOnlyList<CardUserIdentity> _cardUserIdentities;
 
-                        return new List<Account>()
-                        {
-                            new JointAccount()
-                            {
-                                Id = accountId,
-                                Balance = 100.00,
-                                Cards = new List<Card>()
-                                {
-                                    new CashCard()
-                                    {
-                                        Id = 1,
-                                        AccountId = accountId
-                                    },
-                                    new CashCard()
-                                    {
-                                        Id = 2,
-                                        AccountId = accountId
-                                    }
-                                }
-                            }
-                        };
+                public BankDataBase()
+                {
+                    if(_accounts == null)
+                    {
+                        InitialiseAccounts();
                     }
-                }
 
-                private IReadOnlyList<CardUserIdentity> _cardUserIdentities
-                {
-                    get
+                    if(_cardUserIdentities == null)
                     {
-                        return new List<CardUserIdentity>()
-                        {
-                            new CardUserIdentity()
-                            {
-                                PIN = "1234",
-                                Card = _accounts.FirstOrDefault(a => a.Id == 1)?.Cards?.FirstOrDefault(c => c.Id == 1)
-                            },
-                            new CardUserIdentity()
-                            {
-                                PIN = "2345",
-                                Card = _accounts.FirstOrDefault(a => a.Id == 1)?.Cards?.FirstOrDefault(c => c.Id == 2)
-                            }
-                        };
+                        InitialiseCardIds();
                     }
                 }
 
@@ -267,6 +259,51 @@ namespace Bank.Consortium
                 public async Task<IReadOnlyList<CardUserIdentity>> GetCardUserIdentities()
                 {
                     return await Task.Run(() => _cardUserIdentities);
+                }
+
+                private void InitialiseAccounts()
+                {
+                    var accountId = 1;
+                    _accounts = new List<Account>()
+                    {
+                        new JointAccount()
+                        {
+                            Id = accountId,
+                            Balance = 100.00,
+                            Cards = new List<Card>()
+                            {
+                                new CashCard()
+                                {
+                                    Id = 1,
+                                    AccountId = accountId
+                                },
+                                new CashCard()
+                                {
+                                    Id = 2,
+                                    AccountId = accountId
+                                }
+                            }
+                        }
+                    };
+
+                }
+
+                private void InitialiseCardIds()
+                {
+                    _cardUserIdentities = new List<CardUserIdentity>()
+                    {
+                        new CardUserIdentity()
+                        {
+                            PIN = "1234",
+                            Card = _accounts.FirstOrDefault(a => a.Id == 1)?.Cards?.FirstOrDefault(c => c.Id == 1)
+                        },
+                        new CardUserIdentity()
+                        {
+                            PIN = "2345",
+                            Card = _accounts.FirstOrDefault(a => a.Id == 1)?.Cards?.FirstOrDefault(c => c.Id == 2)
+                        }
+                    };
+
                 }
             }
         }

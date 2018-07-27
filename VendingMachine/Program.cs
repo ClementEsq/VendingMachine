@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bank.Consortium;
 using Bank.Consortium.DataBase.Bank;
@@ -99,9 +100,9 @@ namespace VendingMachine
         }
 
 
-        private static Card CreateCard()
+        private static UserCard CreateCard()
         {
-            return new Card
+            return new UserCard
             {
                 Id = 1,
                 AccountId = 1
@@ -151,6 +152,7 @@ namespace VendingMachine
 
         private void ConfigureBankServices(IServiceCollection serviceCollection)
         {
+
             serviceCollection.AddTransient<ICardUserIdentityService, CardUserIdentityService>();
             serviceCollection.AddTransient<IAccountService, AccountService>();
         }

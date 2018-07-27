@@ -16,4 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\VendingMachine.Services\VendingMachine.Services.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="VendingMachine.Services\Services.cs" />
+    <Compile Remove="VendingMachine.Tests\Tests.cs" />
+  </ItemGroup>
 </Project>
